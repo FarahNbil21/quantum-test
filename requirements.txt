@@ -3,5 +3,7 @@ streamlit-folium
 folium
 osmnx
 networkx
+scipy
+scikit-learn
 qiskit
 qiskit-aer
