@@ -54,10 +54,10 @@ def reset_selection():
 # ------------------------------------------------------------------
 # Sidebar controls
 # ------------------------------------------------------------------
-st.sidebar.title("⚙️ Settings")
+st.sidebar.title(" Settings")
 K = st.sidebar.slider("Number of candidate paths (K)", min_value=2, max_value=10, value=6)
 shots = st.sidebar.select_slider("Quantum shots per search", options=[64, 128, 256, 512, 1024], value=512)
-st.sidebar.button("🔄 Reset selection", on_click=reset_selection)
+st.sidebar.button(" Reset selection", on_click=reset_selection)
 
 st.sidebar.markdown("---")
 st.sidebar.markdown(
@@ -68,7 +68,7 @@ st.sidebar.markdown(
     "4. Click again anytime to start a new selection."
 )
 
-st.title("🧭 Quantum Route Finder")
+st.title("Quantum Route Finder")
 st.caption("Classical K-shortest-path search + a real Grover-based quantum search to pick the best one.")
 
 col_map, col_info = st.columns([2, 1])
@@ -103,7 +103,7 @@ with col_map:
                 color=WINNER_COLOR if is_winner else PALETTE[i % len(PALETTE)],
                 weight=6 if is_winner else 3,
                 opacity=1.0 if is_winner else 0.55,
-                tooltip=f"Path {i} — cost {cost:.0f} m" + (" ⭐ Quantum pick" if is_winner else ""),
+                tooltip=f"Path {i} — cost {cost:.0f} m" + ("Quantum pick" if is_winner else ""),
             ).add_to(m)
 
     map_state = st_folium(m, height=560, width=700, key="route_map")
@@ -137,7 +137,7 @@ with col_info:
     st.write(f"**End:** {st.session_state.end_point or '— click the map —'}")
 
     can_search = st.session_state.start_point and st.session_state.end_point
-    if st.button("🚀 Find Best Route", disabled=not can_search, use_container_width=True):
+    if st.button("Find Best Route", disabled=not can_search, use_container_width=True):
         with st.spinner("Finding candidate routes and running the quantum search..."):
             start_node = ox_nearest = None
             import osmnx as ox
@@ -170,14 +170,14 @@ with col_info:
         speed_mps = 40 * 1000 / 3600  # assume 40 km/h average
         eta_min = (best_cost / speed_mps) / 60
 
-        st.markdown("### 🏆 Quantum-selected route")
+        st.markdown("###Quantum-selected route")
         st.metric("Distance", f"{best_cost:.0f} m")
         st.metric("Estimated time (@40 km/h)", f"{eta_min:.1f} min")
         st.caption(f"Quantum search took {result['elapsed']:.2f}s (simulated).")
 
         st.markdown("### Candidate paths")
         for i, (_, cost) in enumerate(result["candidates"]):
-            marker = " ⭐" if i == result["best_idx"] else ""
+            marker = " ⭐ " if i == result["best_idx"] else ""
             st.write(f"Path {i}{marker} — {cost:.0f} m")
 
         if result["hist"]:
